@@ -39,7 +39,7 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
     }
 
     /**
-     * 根据请求uri匹配版本信息
+     * 根据request查找匹配到的筛选条件
      * @param httpServletRequest
      * @return
      */
@@ -56,7 +56,7 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
     }
 
     /**
-     * 比较版本，优先匹配最新的版本号
+     * 不同筛选条件比较,用于版本排序(最新的版本 > 老版本)
      * @param apiVersionCondition
      * @param httpServletRequest
      * @return
