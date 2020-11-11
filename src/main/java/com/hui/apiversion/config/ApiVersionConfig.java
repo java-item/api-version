@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.condition.RequestCondition;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -64,6 +65,25 @@ public class ApiVersionConfig extends WebMvcConfigurationSupport {
          */
         private RequestCondition<ApiVersionCondition> createCondition(ApiVersion apiVersion){
             return apiVersion == null ? null : new ApiVersionCondition(apiVersion.value());
+        }
+    }
+
+    /**
+     * 当设置WebMvcConfigurationSupport配置时，WebMvcAutoConfiguration则会失效，导致静态资源无法方法(No mapping for get),
+     * 所以将静态资源添加进MVC容器中
+     * @param registry
+     */
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
+        if (!registry.hasMappingForPattern("/**")) {
+            registry.addResourceHandler("/**")
+                    .addResourceLocations(
+                            "classpath:/META-INF/resources/",
+                            "classpath:/resources/",
+                            "classpath:/static/",
+                            "classpath:/public/"
+                    );
         }
     }
 }
