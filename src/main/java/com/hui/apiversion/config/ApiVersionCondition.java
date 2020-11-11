@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 定义url匹配条件
+ */
 @Data
 public class ApiVersionCondition implements RequestCondition<ApiVersionCondition> {
     /**
@@ -42,7 +45,6 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
      */
     @Override
     public ApiVersionCondition getMatchingCondition(HttpServletRequest httpServletRequest) {
-        System.out.println("httpServletRequest = " + httpServletRequest);
         Matcher matcher = VERSION_PREFIX_PATTERN.matcher(httpServletRequest.getRequestURI());
         if (matcher.find()) {
             int version = Integer.parseInt(matcher.group(1));

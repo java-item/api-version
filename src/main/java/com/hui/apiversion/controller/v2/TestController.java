@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @ApiVersion(2)
 @RequestMapping("{version}/test")
 public class TestController {
+    /**
+     * 覆盖老版本的test/index方法
+     * @return
+     */
     @RequestMapping("index")
     public String index(){
-        return "v2 -> "+ System.currentTimeMillis();
+        return "v2 - index -> "+ System.currentTimeMillis();
     }
 }
